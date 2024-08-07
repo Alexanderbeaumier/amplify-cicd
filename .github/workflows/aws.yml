@@ -22,6 +22,6 @@ jobs:
 
     - name: Deploy to S3
       env:
-        S3_BUCKET: your-amplify-app-bucket-name
+        S3_BUCKET: amplify-amplifycicd-prod-f3da3-deployment
       run: |
         aws s3 sync ./ s3://$S3_BUCKET --delete --exclude ".git/*" --exclude ".github/*" --exclude "node_modules/*" --exclude "*.yml"
