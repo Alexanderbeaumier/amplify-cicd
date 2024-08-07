@@ -1,4 +1,4 @@
-name: Deploy to AWS Amplify
+name: Deploy Static Site to AWS Amplify
 
 on:
   push:
@@ -20,11 +20,15 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - name: Install Amplify CLI
-      run: npm install -g @aws-amplify/cli
+    - name: Install AWS CLI
+      run: |
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install
 
-    - name: Initialize Amplify
-      run: amplify init --appId d2v4i5434igzgr --envName prod --yes || echo "Amplify already initialized"
+    - name: Deploy to S3
+      env:
+        S3_BUCKET: your-amplify-app-bucket-name
+      run: |
+        aws s3 sync ./ s3://$S3_BUCKET --delete --exclude ".git/*" --exclude ".github/*" --exclude "node_modules/*" --exclude "*.yml"
 
-    - name: Publish to Amplify
-      run: amplify publish --yes
