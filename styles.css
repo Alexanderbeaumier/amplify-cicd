@@ -1,13 +1,13 @@
 :root {
-    --bg-color: #ffffff;
-    --text-color: #333333;
-    --accent-color: #007bff;
-    --note-bg-color: #f4f4f9;
-    --note-text-color: #333333;
-    --button-bg-color: #007bff;
-    --button-hover-color: #0056b3;
-    --delete-bg-color: #dc3545;
-    --delete-hover-color: #c82333;
+    --bg-color: #f0f4f8;
+    --text-color: #2c3e50;
+    --accent-color: #3498db;
+    --note-bg-color: #ffffff;
+    --note-text-color: #2c3e50;
+    --button-bg-color: #3498db;
+    --button-hover-color: #2980b9;
+    --delete-bg-color: #e74c3c;
+    --delete-hover-color: #c0392b;
 }
 
 body {
@@ -84,6 +84,9 @@ textarea:focus {
 .note-list {
     max-height: 300px;
     overflow-y: auto;
+    border: 2px dashed var(--accent-color);
+    padding: 10px;
+    border-radius: 5px;
 }
 
 ul {
