@@ -23,8 +23,9 @@ jobs:
     - name: Install Amplify CLI
       run: npm install -g @aws-amplify/cli
 
-    - name: Pull Amplify environment
-      run: amplify pull --appId d2v4i5434igzgr --envName prod --yes
+    - name: Set up Amplify Hosting
+      run: |
+        amplify add hosting --yes --hostingType S3AndCloudFront || echo "Hosting already set up"
 
     - name: Publish to Amplify
       run: amplify publish --yes
