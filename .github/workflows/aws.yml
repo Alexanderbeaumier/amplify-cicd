@@ -1,0 +1,33 @@
+name: Deploy to AWS Amplify
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Install Amplify CLI
+      run: npm install -g @aws-amplify/cli
+
+    - name: Initialize Amplify
+      run: amplify init --yes --amplify "{\"envName\":\"prod\"}" --frontend "{\"frontend\":\"javascript\",\"framework\":\"none\",\"config\":{}}" --providers "{\"awscloudformation\":{\"configLevel\":\"project\",\"useProfile\":false,\"accessKeyId\":\"${{ secrets.AWS_ACCESS_KEY_ID }}\",\"secretAccessKey\":\"${{ secrets.AWS_SECRET_ACCESS_KEY }}\",\"region\":\"us-east-1\"}}"
+
+    - name: Add hosting
+      run: amplify add hosting --yes --hostingType S3AndCloudFront
+
+    - name: Publish to Amplify
+      run: amplify publish --yes
